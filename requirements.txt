@@ -1,5 +1,6 @@
-pandas
-streamlit
-matplotlib
+pandas == 1.4.4
+streamlit == 1.11.0
+matplotlib == 3.5.2
 sklearn
-pickle
+pickleshare==0.7.5
+Flask==2.1.3
