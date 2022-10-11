@@ -198,18 +198,23 @@ if (int(id_client) in id_list):
         st.markdown("<h2 style='text-align: center; color: #5A5E6B;'>Décision de crédit</h2>",
             unsafe_allow_html=True)
 
-        # Utilisation de l'API :
+        # Utilisation de l'API en local:
 
-        API_url = "https://laila770845-openclassroomsproject-app-s7e9r2.streamlitapp.com/" + str(id_client)
+        #API_url = "http://127.0.0.1:5000/outil_scoring_credit/" + str(id_client)
 
 
 
         with st.spinner('Chargement du score du client...'):
-            json_url = urlopen(API_url)
+            #json_url = urlopen(API_url)
 
-            API_data = json.loads(json_url.read())
-            prediction = API_data['prediction']
-            proba = API_data['proba']
+            #API_data = json.loads(json_url.read())
+            X = data[data['SK_ID_CURR'] == ID]
+            X_sans_id = X.drop(columns='SK_ID_CURR')
+            X_pred = preprocessor.transform(X_sans_id)
+            proba = model.predict_proba(X_pred)
+            pred = model.predict(X_pred)
+            #prediction = API_data['prediction']
+            #proba = API_data['proba']
             proba = round(proba * 100, 1)
 
             #gauge
