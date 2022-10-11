@@ -212,7 +212,7 @@ if (int(id_client) in id_list):
             X_sans_id = X.drop(columns='SK_ID_CURR')
             X_pred = preprocessor.transform(X_sans_id)
             pred_proba = model.predict_proba(X_pred)
-            pred = model.predict(X_pred)
+            prediction = model.predict(X_pred)
             #prediction = API_data['prediction']
             #proba = API_data['proba']
             proba = float(pred_proba[0][0])
