@@ -208,7 +208,7 @@ if (int(id_client) in id_list):
             #json_url = urlopen(API_url)
 
             #API_data = json.loads(json_url.read())
-            X = data[data['SK_ID_CURR'] == ID]
+            X = data[data['SK_ID_CURR'] == id_client]
             X_sans_id = X.drop(columns='SK_ID_CURR')
             X_pred = preprocessor.transform(X_sans_id)
             proba = model.predict_proba(X_pred)
