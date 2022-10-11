@@ -12,3 +12,4 @@ shap==0.39.0
 streamlit==1.11.1
 pickleshare==0.7.5
 pillow==9.2.0
+ipython==8.4.0
