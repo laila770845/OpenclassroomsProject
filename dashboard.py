@@ -131,9 +131,6 @@ model = load_model()
 # Chargement du preprocessor
 preprocessor = pickle.load(open('preprocessor.pkl', 'rb'))
 
-#Chargement des shap values
-#shap_values = load_shap_values()
-
 #Chargement des valeurs attendues du explainer
 explainer_exp_value = load_explainer_value()
 
@@ -269,10 +266,9 @@ if (int(id_client) in id_list):
             X = data[data['SK_ID_CURR'] == int(id_client)]
             X_pred_sans_id = X.drop(columns='SK_ID_CURR')
             X_pred = preprocessor.transform(X_pred_sans_id)
-
             fig, ax = plt.subplots(figsize=(15, 15))
             shap_values = explainer.shap_values(X_pred)
-            st_shap(shap.force_plot(explainer_exp_value,shap_values, X_pred))
+            st_shap(shap.force_plot(explainer_exp_value,shap_values, X_pred_sans_id))
 
         # Ligne de séparation :
         st.markdown("***")
@@ -286,18 +282,9 @@ if (int(id_client) in id_list):
 
             with st.spinner('Chargement des informations descriptives de ce client...'):
 
-                #col = st.columns(5)
-                #col[0].write('**Age** : {:.0f} ans'.format(int(client_info["DAYS_BIRTH"] / -365)))
-                #with col[1]:
-                #st.write('**Situation Familiale** :', client_info["NAME_FAMILY_STATUS"])
-                #col[2].write(f'**Revenus annuels en $**: {data_info.iloc[id_client]["AMT_INCOME_TOTAL"]}')
-                #col[3].write(f'**Montant du prêt en $** : {data_info.iloc[id_client]["AMT_CREDIT"]}')
-                #col[4].write(f'**Montant des annuités en $** : {data_info.iloc[id_client]["AMT_ANNUITY"]}')
-
                 age, rev_annuel, montant_pret, montant_annuite = st.columns(4)
 
                 age.metric(label="Age", value=f"{abs(int(round(client_info.DAYS_BIRTH / 365, 25)))} ans")
-                #sit_fam.metric(label="Situation Familiale", value=f"{int(round(client_info.NAME_FAMILY_STATUS))} $")
                 rev_annuel.metric(label="Revenus annuels", value=f"{int(round(client_info.AMT_INCOME_TOTAL))} $")
                 montant_pret.metric(label="Montant du prêt", value=f"{int(round(client_info.AMT_CREDIT))} $")
                 montant_annuite.metric(label="Montant des annuités", value=f"{int(round(client_info.AMT_ANNUITY))} $")
@@ -344,3 +331,6 @@ if (int(id_client) in id_list):
         st.image('global_feature_importance.png')
 else:
     st.markdown("**Identifiant non reconnu**")
+
+#Lien streamlit dashboard
+# https://laila770845-openclassroomsproject-dashboard-dashboard-dwus2u.streamlitapp.com/
