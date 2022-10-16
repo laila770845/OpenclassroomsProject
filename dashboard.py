@@ -223,8 +223,8 @@ if (int(id_client) in id_list):
                 domain={'x': [0, 1], 'y': [0, 1]},
                 gauge={'axis': {'range': [None, 100]},
                        'steps': [
-                           {'range': [0, 60], 'color': "lightgreen"},
-                           {'range': [60, 100], 'color': "darksalmon"},
+                           {'range': [0, 60], 'color':"darksalmon" },
+                           {'range': [60, 100], 'color': "lightgreen"},
                        ],
                        'threshold': {
                            'line': {'color': "white", 'width': 10},
