@@ -238,7 +238,7 @@ if (int(id_client) in id_list):
             gauge.update_layout(width=450, height=250,
                                 margin=dict(l=50, r=50, b=0, t=0, pad=4))
             #Résultat demande de crédit
-            if (prediction == 0 & proba > 0.61):
+            if (prediction == 0 and proba > 61):
                 pred, prob = st.columns(2)
                 with prob:
                     st.plotly_chart(gauge,unsafe_allow_html=True)
