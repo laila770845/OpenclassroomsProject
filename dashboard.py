@@ -1,4 +1,3 @@
-# APP STREAMLIT : (commande : streamlit run XX/dashboard.py depuis le dossier python)
 import streamlit as st
 import streamlit.components.v1 as components
 import numpy as np
@@ -78,9 +77,9 @@ def load_age_population(data):
 #
 @st.cache
 def load_income_population(sample):
-    df_income = pd.DataFrame(sample["AMT_INCOME_TOTAL"])
-    df_income = df_income.loc[df_income['AMT_INCOME_TOTAL'] < 200000, :]
-    return df_income
+    data_income = pd.DataFrame(sample["AMT_INCOME_TOTAL"])
+    data_income = data_income.loc[data_income['AMT_INCOME_TOTAL'] < 200000, :]
+    return data_income
 
 @st.cache
 def get_client_info(data, id_client):
@@ -143,9 +142,9 @@ def st_shap(plot, height=None):
     shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
     components.html(shap_html, height=height)
 
-#######################################
+#
 # SIDEBAR
-#######################################
+#
 
 LOGO_IMAGE = "logo.png"
 SHAP_GENERAL = "global_feature_importance.png"
@@ -153,11 +152,11 @@ SHAP_GENERAL = "global_feature_importance.png"
 with st.sidebar:
     st.image(LOGO_IMAGE,width=200)
 
-    show_credit_decision = st.checkbox("Afficher la décision de crédit")
-    show_client_details = st.checkbox("Afficher les informations du client")
-    show_client_comparison = st.checkbox("Comparer aux autres clients")
-    shap_general = st.checkbox("Afficher la feature importance globale")
-    if (st.checkbox("Aide description des features")):
+    show_credit_decision = st.checkbox("Décision de crédit")
+    show_client_details = st.checkbox("Informations descriprives relatives à ce client")
+    show_client_comparison = st.checkbox("Comparaison aux autres clients")
+    shap_general = st.checkbox("Feature importance globale")
+    if (st.checkbox("Description des variables")):
         list_var = description.index.to_list()
         list_var = list(dict.fromkeys(list_var))
         var = st.selectbox('Sélectionner une variable', \
@@ -166,9 +165,9 @@ with st.sidebar:
         desc = description['Description'].loc[description.index == var][:1]
         st.markdown('**{}**'.format(desc.iloc[0]))
 
-#######################################
+#
 # PARTIE En tête
-#######################################
+#
 
 # Titre :
 st.markdown("<h1 style='text-align: center; color: #5A5E6B;'>DOSSIER CLIENT : </h1>", unsafe_allow_html=True)
@@ -187,9 +186,9 @@ if (int(id_client) in id_list):
     client_info = get_client_info(data_info, id_client)
 
 
-    # -------------------------------------------------------
+    #
     # Partie décision de crédit
-    # -------------------------------------------------------
+    #
 
     if (show_credit_decision):
         st.markdown("<h2 style='text-align: center; color: #5A5E6B;'>Décision de crédit</h2>",
@@ -273,9 +272,9 @@ if (int(id_client) in id_list):
         # Ligne de séparation :
         st.markdown("***")
 
-    # -------------------------------------------------------
+    #
     # PARTIE informations descriptives de ce client
-    # -------------------------------------------------------
+    #
         if (show_client_details):
             st.markdown("<h2 style='text-align: center; color: #5A5E6B;'>Informations descriptives relatives à ce client</h2>",
                         unsafe_allow_html=True)
@@ -293,9 +292,9 @@ if (int(id_client) in id_list):
                 # Ligne de démarcation :
                 st.markdown("***")
 
-    # -------------------------------------------------------
+    #
     # PARTIE Comparaison du client aux autres clients
-    # -------------------------------------------------------
+    #
     var_comparaison = {
         'DAYS_BIRTH': "AGE",
         'AMT_INCOME_TOTAL': "REVENUS",
@@ -322,9 +321,9 @@ if (int(id_client) in id_list):
                 st.write('tout est ok')
 
 
-    # -------------------------------------------------------
+    #
     # PARTIE feature importance globale
-    # -------------------------------------------------------
+    #
 
     if (shap_general):
         st.header('Feature importance globale')
