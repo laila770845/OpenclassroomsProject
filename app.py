@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Import des librairies
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import pandas as pd
 import pickle
 
@@ -25,9 +25,9 @@ def hello():
     return 'Hello, World!'
 
 
-@app.route('/outil_scoring_credit/<identifiant>')
-def prediction(identifiant):
-    print('identifiant du client = ', identifiant)
+@app.route('/prediction/')
+def prediction():
+    identifiant = int(request.args.get('identifiant'))
 
     # Récupération des données du client en question
     ID = int(identifiant)
