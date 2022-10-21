@@ -194,24 +194,19 @@ if (int(id_client) in id_list):
         st.markdown("<h2 style='text-align: center; color: #5A5E6B;'>Décision de crédit</h2>",
             unsafe_allow_html=True)
 
-        # Utilisation de l'API en local:
+        Utilisation de l'API :
 
-        #API_url = "http://127.0.0.1:5000/outil_scoring_credit/" + str(id_client)
+        API_lien = "https://api-projet7.herokuapp.com/prediction/" + str(id_client)
 
 
 
         with st.spinner('Chargement du score du client...'):
-            #json_url = urlopen(API_url)
+            json_lien = urlopen(API_lien)
 
-            #API_data = json.loads(json_url.read())
-            X = data[data['SK_ID_CURR'] == id_client]
-            X_sans_id = X.drop(columns='SK_ID_CURR')
-            X_pred = preprocessor.transform(X_sans_id)
-            pred_proba = model.predict_proba(X_pred)
-            prediction = model.predict(X_pred)
-            #prediction = API_data['prediction']
-            #proba = API_data['proba']
-            proba = float(pred_proba[0][0])
+            API_data = json.loads(json_lien.read())
+            prediction = API_data['prediction']
+            proba = API_data['proba']
+            proba = float(proba[0][0])
             proba = round(proba * 100, 1)
 
             #gauge
