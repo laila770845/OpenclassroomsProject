@@ -194,7 +194,7 @@ if (int(id_client) in id_list):
         st.markdown("<h2 style='text-align: center; color: #5A5E6B;'>Décision de crédit</h2>",
             unsafe_allow_html=True)
 
-        Utilisation de l'API :
+        "Utilisation de l'API :"
 
         API_lien = "https://api-projet7.herokuapp.com/prediction/" + str(id_client)
 
