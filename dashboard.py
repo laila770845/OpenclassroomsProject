@@ -205,8 +205,8 @@ if (int(id_client) in id_list):
 
             API_data = json.loads(json_lien.read())
             prediction = API_data['prediction']
-            proba = API_data['proba']
-            proba = float(proba[0][0])
+            pred_proba = API_data['proba']
+            proba = float(pred_proba[0][0])
             proba = round(proba * 100, 1)
 
             #gauge
